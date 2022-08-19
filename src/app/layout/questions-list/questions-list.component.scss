@@ -1,0 +1,41 @@
+.questions-list-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    height: calc(100vh - 100px);
+
+    .questions-list {
+        display: flex;
+        flex-direction: column;
+
+        .question-tile {
+            display: flex;
+            flex-direction: column;
+            padding-right: 12px;
+
+            border-right: 1px solid #eeeeee;
+
+            > span {
+                padding: 8px 0;
+                display: flex;
+                align-items: center;
+            }
+
+            &:not(:last-child) {
+                border-bottom: 1px solid #eeeeee;
+            }
+        }
+    }
+}
+
+.column-title {
+    font-size: 24px;
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+textarea {
+    height: 65px;
+    resize: none;
+}

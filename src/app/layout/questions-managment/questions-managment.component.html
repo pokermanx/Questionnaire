@@ -1,0 +1,37 @@
+<div class="d-flex flex-column">
+  <div class="d-flex justify-content-between">
+    <span class="back-btn"
+          [routerLink]="['/questions']">
+      Back
+    </span>
+
+    <button class="qs-button"
+            type="button"
+            [routerLink]="['/add-question']">
+      Add Question
+    </button>
+  </div>
+
+  <div class="divider my-2"></div>
+
+  <div class="questions-list-wrapper mt-3">
+    <div class="questions-list">
+      <div *ngFor="let question of questions; trackBy: questionsTrack"
+           class="question-tile">
+        <span>{{ question.text }}</span>
+        <span>{{ question.dateCreated | date: 'MMM d, y, HH:mm:ss' }}</span>
+        <span>
+          {{ ('QuestionTypes.' + QuestionType[question.type]) | translate }}
+        </span>
+        <span>{{ question.options }}</span>
+        <div class="d-flex align-items-center">
+          <span [routerLink]="['/edit-question', question.id]"
+                class="add-button">Edit</span>
+          <span (click)="deleteQuestion(question.id)"
+                title="Delete"
+                class="ml-3 delete-icon">x</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

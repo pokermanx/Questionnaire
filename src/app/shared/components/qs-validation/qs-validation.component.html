@@ -1,0 +1,52 @@
+<div class="qs-invalid-messages"
+     [class.force-show]="forceShow || (showOnDirty && control.dirty)">
+  <ng-container *ngIf="control?.invalid">
+    <ng-container *ngFor="let validationMessage of messages | keyvalue; trackBy: trackMessages">
+      <span *ngIf="control.hasError(validationMessage.key) && !!validationMessage.value">
+        {{ validationMessage.value }}
+      </span>
+    </ng-container>
+
+    <span *ngIf="showValidation && !messages.hasOwnProperty('required') && control.hasError('required')">
+      {{ 
+        (name ? 'ValidationModule.Required' : 'ValidationModule.RequiredNoName') | translate: { field: name } 
+      }}
+    </span>
+    <span *ngIf="showValidation && !messages.hasOwnProperty('maxlength') && control.hasError('maxlength')">
+      {{ 
+        'ValidationModule.MaxLength' | translate: {
+            field: name || ('General.Field' | translate), 
+            max: control.errors?.['maxlength'].requiredLength
+        } 
+      }}
+    </span>
+    <span *ngIf="showValidation && !messages.hasOwnProperty('minlength') && control.hasError('minlength')">
+      {{ 
+        'ValidationModule.MinLength' | translate: {
+            field: name || ('General.Field' | translate), 
+            min: control.errors?.['minlength'].requiredLength
+        } 
+      }}
+    </span>
+
+    <span *ngIf="showValidation && !messages.hasOwnProperty('max') && control.hasError('max')">
+      {{ 
+        'ValidationModule.Max' | translate: {
+            field: name || ('General.Field' | translate), 
+            max: control.errors?.['max'].max
+        } 
+      }}
+    </span>
+    <span *ngIf="showValidation && !messages.hasOwnProperty('min') && control.hasError('min')">
+      {{ 
+        'ValidationModule.Min' | translate: {
+            field: name || ('General.Field' | translate), 
+            min: control.errors?.['min'].min
+        } 
+      }}
+    </span>
+  </ng-container>
+
+  <ng-content></ng-content>
+
+</div>

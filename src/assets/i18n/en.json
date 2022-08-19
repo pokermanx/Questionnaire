@@ -1,0 +1,19 @@
+{
+  "General": {
+    "Save": "Save",
+    "Field": "Field"
+  },
+  "QuestionTypes": {
+    "SingleChoice": "Single Choice",
+    "MultipleChoice": "Multiple Choice",
+    "Open": "Open"
+  },
+  "ValidationModule": {
+    "RequiredNoName": "This field is required",
+    "Required": "Please enter {{ field }}",
+    "MaxLength": "{{ field }} must not be more than a length of {{ max }}",
+    "MinLength": "{{ field }} must not be less than a length of {{ min }}",
+    "Max": "{{ field }} cannot be more than {{ max }}",
+    "Min": "{{ field }} cannot be less than {{ min }}"
+  }
+}

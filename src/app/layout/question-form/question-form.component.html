@@ -1,0 +1,77 @@
+<span class="back-btn mb-4"
+      (click)="backToManage()">
+  Manage Questions
+</span>
+
+<form [formGroup]="questionForm"
+      (ngSubmit)="questionForm.valid && onSubmit()"
+      #qsForm="ngForm"
+      class="d-flex flex-column"
+      [ngClass]="{
+        'submitted': qsForm.submitted
+      }">
+
+  <div class="fieldset-row">
+    <div class="col">
+      <label for="question-text">Text</label>
+      <textarea id="question-text"
+                formControlName="text"></textarea>
+      <qs-validation [control]="text"
+                     name="Text">
+      </qs-validation>
+    </div>
+    <div class="col">
+      <label>Type</label>
+      <div *ngFor="let type of QuestionType | extractValues"
+           class="qs-radio mb-2">
+        <input #fromFile
+               type="radio"
+               [id]="'question-type-' + type.key"
+               formControlName="type"
+               [value]="type.value">
+        <label [for]="'question-type-' + type.key">
+          {{ ('QuestionTypes.' + type.key) | translate }}
+        </label>
+      </div>
+      <qs-validation [control]="type"
+                     name="Type">
+      </qs-validation>
+    </div>
+    <div *ngIf="options.enabled"
+         class="col">
+      <label for="question-text">Options</label>
+
+      <div class="options-list">
+        <div *ngFor="let option of optionControls; let i = index"
+             class="option">
+
+          <div class="d-flex align-items-center">
+            <input type="text"
+                   [formControl]="option">
+            <span (click)="deleteAnswerOption(i)"
+                  title="Delete"
+                  class="ml-1 delete-icon">x</span>
+          </div>
+
+          <qs-validation [control]="option"
+                         name="Option Value">
+          </qs-validation>
+        </div>
+      </div>
+      <qs-validation [control]="options"
+                     name="Options">
+      </qs-validation>
+
+      <span (click)="addAnswerOption()"
+            class="add-button w-max">+ Add option</span>
+
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <button class="qs-button">
+      {{ 'General.Save' | translate }}
+    </button>
+  </div>
+
+</form>

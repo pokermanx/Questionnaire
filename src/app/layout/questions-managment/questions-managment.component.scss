@@ -1,0 +1,27 @@
+.questions-list-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    height: calc(100vh - 100px);
+
+    .questions-list {
+        display: flex;
+        flex-direction: column;
+
+        .question-tile {
+            display: grid;
+            grid-template-columns: 4fr 1fr 1fr 3fr auto;
+
+            grid-column-gap: 12px;
+
+            > span {
+                padding: 8px 0;
+                display: flex;
+                align-items: center;
+                &:not(:last-child) {
+                    border-right: 1px solid #eeeeee;
+                }
+            }
+        }
+    }
+}

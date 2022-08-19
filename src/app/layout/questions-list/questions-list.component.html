@@ -1,0 +1,98 @@
+<div class="d-flex flex-column">
+  <div class="d-flex justify-content-end">
+
+    <button class="qs-button"
+            type="button"
+            [routerLink]="['/manage-questions']">
+      Manage Questions
+    </button>
+  </div>
+
+  <div class="divider my-2"></div>
+
+  <div class="fieldset-row fieldset-row--2 mt-3">
+    <div class="col questions-list-wrapper">
+      <div class="questions-list">
+        <span class="column-title">Unanswered</span>
+        <div *ngFor="let question of unansweredQuestions; let i = index; trackBy: questionsTrack"
+             class="question-tile">
+
+          <span>{{ question.text }}</span>
+
+          <ng-container [ngTemplateOutlet]="QuestionAnswers"
+                        [ngTemplateOutletContext]="{ question, i: 'Unanswered-' + i }"></ng-container>
+
+          <button class="qs-button qs-button--small ml-auto mt-2"
+                  type="button"
+                  [disabled]="question.assignedControl?.invalid"
+                  (click)="answerQuestion(question)">
+            Answer
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col questions-list-wrapper">
+      <div class="questions-list">
+
+        <span class="column-title">Answered</span>
+
+        <div *ngFor="let answered of answeredQuestions; let i = index; trackBy: answeredQuestionsTrack"
+             class="question-tile">
+
+          <span>{{ answered.question.text }}</span>
+
+          <ng-container [ngTemplateOutlet]="QuestionAnswers"
+                        [ngTemplateOutletContext]="{ question: answered.question, i: 'Answered-' + i }"></ng-container>
+
+          <span class="ml-auto remove-button"
+                (click)="deleteAnswer(answered)">
+            Delete Answer
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #QuestionAnswers
+             let-question="question"
+             let-i="i">
+
+  <ng-container *ngIf="question.assignedControl"
+                [ngSwitch]="question.type">
+    <ng-template [ngSwitchCase]="QuestionType.SingleChoice">
+      <div *ngFor="let option of question.options"
+           class="qs-radio mb-2">
+        <input type="radio"
+               [name]="i"
+               [id]="'question-' + i + '-' + option"
+               [formControl]="question.assignedControl"
+               [value]="option">
+        <label [for]="'question-' + i + '-' + option">
+          {{ option }}
+        </label>
+      </div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="QuestionType.MultipleChoice">
+      <div *ngFor="let option of question.options"
+           class="qs-checkbox mb-2"
+           [formGroup]="question.assignedControl">
+        <input type="checkbox"
+               [name]="i"
+               [id]="'question-' + i + '-' + option"
+               [formControlName]="option"
+               [value]="option">
+        <label [for]="'question-' + i + '-' + option">
+          {{ option }}
+        </label>
+      </div>
+    </ng-template>
+    <ng-template [ngSwitchCase]="QuestionType.Open">
+      <textarea [formControl]="question.assignedControl"></textarea>
+      <qs-validation [control]="question.assignedControl"
+                     [forceShow]="true"
+                     [messages]="{ required: '' }"></qs-validation>
+    </ng-template>
+  </ng-container>
+
+</ng-template>

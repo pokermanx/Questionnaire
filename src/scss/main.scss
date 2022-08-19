@@ -1,0 +1,94 @@
+@import "mixins.scss";
+@import "utils.scss";
+@import "controls.scss";
+
+body {
+    margin: 0;
+    padding: 12px;
+
+    overflow: hidden;
+
+    width: 100vw;
+    height: 100vh;
+}
+
+*,
+:after,
+:before {
+    box-sizing: border-box;
+}
+
+button {
+    outline: none;
+    box-shadow: none;
+    background: unset;
+    border: none;
+}
+
+.divider {
+    height: 1px;
+    width: 100%;
+    border: 0;
+    background-color: #eeeeee;
+}
+
+.qs-invalid-messages {
+    display: none;
+
+    &.force-show {
+        display: flex;
+        flex-direction: column;
+    }
+
+    > span {
+        color: #dc3545;
+        font-size: 80%;
+        margin-top: 0.25rem;
+    }
+}
+
+form {
+    label {
+        margin-bottom: 4px;
+    }
+
+    &.submitted {
+        .qs-invalid-messages {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ng-invalid {
+            border: 1px solid #cc3036;
+
+            & ~ .invalid-feedback {
+                display: flex !important;
+                flex-direction: column;
+                margin-top: 0.25rem;
+            }
+        }
+    }
+}
+
+.delete-icon {
+    display: flex;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px;
+
+    @include c-p();
+
+    &:hover {
+        color: red;
+    }
+}
+
+.remove-button {
+    color: red;
+    @include c-p();
+}
+
+.add-button {
+    color: #2a6b99;
+    @include c-p();
+}
