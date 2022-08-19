@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { QuestionFactory } from '../factories/question.factory';
 
 import { IQuestion, Question } from '../models/question.model';
+import { AnswersService } from './answers.service';
 
 @Injectable({
     providedIn: 'root'
@@ -9,6 +10,8 @@ import { IQuestion, Question } from '../models/question.model';
 export class QuestionService {
 
     private readonly QUESTIONS_LIST_KEY = 'questions';
+
+    constructor(private answersService: AnswersService) { }
 
     getQuestionsList(): Question[] {
         const uprasedQuestions = localStorage.getItem(this.QUESTIONS_LIST_KEY) || '';
@@ -59,6 +62,8 @@ export class QuestionService {
         let questions = this.getQuestionsList();
         questions = questions.filter(x => x.id !== id);
         this.updateQuestionsList(questions);
+
+        this.answersService.deleteAnswer(id);
     }
 
     private updateQuestionsList(questions: Question[]): void {
